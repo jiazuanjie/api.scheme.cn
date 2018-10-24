@@ -1,0 +1,16 @@
+{
+  "name": "schemeapi",
+  "host": "localhost",
+  "port": 3003,
+  "appkeys": [
+    "ios",
+    "admin",
+    "website",
+    "mwsite",
+    "android",
+    "pwsite",
+    "owsite",
+    "openapi",
+    "mina"
+  ]
+}

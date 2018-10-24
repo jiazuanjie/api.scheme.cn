@@ -1,0 +1,51 @@
+{
+  "name": "api.scheme.cn",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "reload-api": "pm2 startOrGracefulReload pm2.config.js",
+    "test-cov": "istanbul cover _mocha --recursive test/test_by_abner/",
+    "dev": "nodemon --debug api.js",
+    "model": "node bin/table2model.js",
+    "pretest": "npm run lint",
+    "test": "gulp",
+    "lint": "gulp lint",
+    "watch": "gulp watch"
+  },
+  "dependencies": {
+    "amqplib": "^0.5.2",
+    "co-redis": "^2.1.1",
+    "colors": "^1.3.2",
+    "cryptlib": "^1.0.3",
+    "debug": "^2.6.3",
+    "fs-extra": "^2.1.2",
+    "koa": "^2.2.0",
+    "koa-bodyparser": "^3.2.0",
+    "koa-convert": "^1.2.0",
+    "koa-json": "^2.0.2",
+    "koa-logger": "^2.0.1",
+    "koa-onerror": "^1.2.1",
+    "koa-router": "^7.1.1",
+    "koa-session": "^5.9.0",
+    "koa-session-redis": "^1.1.0",
+    "koa-static": "^3.0.0",
+    "koa-views": "^5.2.1",
+    "moment": "^2.22.2",
+    "mongodb": "^2.2.36",
+    "mysql": "^2.16.0",
+    "node-uuid": "^1.4.8",
+    "nodemailer": "^4.6.8",
+    "path": "^0.12.7",
+    "pug": "^2.0.0-rc.1",
+    "readline": "^1.3.0",
+    "redis": "^2.8.0",
+    "sequelize": "^4.39.0",
+    "supervisor": "^0.12.0",
+    "validates": "^1.0.1",
+    "validator": "^3.43.0",
+    "xss": "^1.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^1.8.1"
+  }
+}
