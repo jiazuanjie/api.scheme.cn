@@ -125,6 +125,7 @@ exports.cashGiftDelete = async (ctx) => {
   await model.where({id: Orm.in(pids)}).deleteAll();
   if (model.getError()) {
     ctx.warning = model.getError();
+    return ;
   }
   ctx.data.result = {affected: 1}
 }

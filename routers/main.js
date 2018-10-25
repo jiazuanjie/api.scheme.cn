@@ -10,6 +10,14 @@ const router = new Router({
 
 //亲友录
 router.get('/contacts/group/list', access.login, contacts.groupList);
+router.post('/contacts/group/create', access.login, contacts.groupCreate);
+router.post('/contacts/group/update', access.login, contacts.groupUpdate);
+router.post('/contacts/group/delete', access.login, contacts.groupDelete);
+router.get('/contacts', access.login, contacts.contacts);
+router.post('/contacts/create', access.login, contacts.contactCreate);
+router.post('/contacts/update', access.login, contacts.contactUpdate);
+router.post('/contacts/delete', access.login, contacts.contactDelete);
+router.get('/contacts/info', access.login, contacts.contactInfo);
 
 //礼金管家
 router.get('/cash_gift/type', cashGift.cashGiftType);
