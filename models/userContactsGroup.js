@@ -32,10 +32,10 @@ exports.factory = function() {
   };
 
   model.validator = function() {
-    try {
-      PropertyChecker(this._save, fields);
-    } catch (err) {
-      return this.reject(lib.getErrMessage(err));
+    if (!this._save.hasOwnProperty('name') || validator.isEmpty(this._save.name)) {
+      return this.reject('分组名称不能为空')
+    } else if (!validator.isLength(this._save.name, 2, 10)) {
+      return this.reject('分组名称字符只能2~10')
     }
 
     return this.resolve(true);
