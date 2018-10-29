@@ -4,6 +4,7 @@
 let Tasker = {};
 Tasker.contacts = require("./contacts");
 Tasker.cashgift = require('./cashgift');
-Tasker.user = require('./user')
+Tasker.user = require('./user');
+Tasker.account = require('./account')
 
 module.exports = global.Tasker = Tasker;

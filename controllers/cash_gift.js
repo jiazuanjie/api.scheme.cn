@@ -171,7 +171,6 @@ exports.cashGiftLogsCreate = async (ctx) => {
     ctx.warning = model.getError();
   }
   ctx.data.result = {affected: 1};
-  result.group_id = ctx.post.group_id;
   Tasker.cashgift.afterCreateCashGiftLog(result, ctx.mongo('scheme'));
 }
 
@@ -198,7 +197,7 @@ exports.cashGiftLogsUpdate = async (ctx) => {
     ctx.warning = model.getError();
   }
   //更新亲密度
-  let intimacy = parseInt((parseInt(ctx.post.amount * 100) - old_amount) / 100 /20);
+  let intimacy = parseInt((parseInt(ctx.post.amount) - old_amount) /20);
   await Contacts.factory().setConn(ctx.mongo('scheme')).where({_id: Mquery.ObjectId(result.contact_id)}).update({$inc: {intimacy: intimacy}}, true);
   ctx.data.result = {affected: 1}
 }

@@ -40,6 +40,7 @@ tasks.afterCreateCashGiftLog = async function (data, mongo) {
       contact = await Contacts.factory().setConn(mongo).setAttributes({
         name: data.username,
         nickname: data.username,
+        first_letter: lib.getFirstLetter(data.username).toUpperCase(),
         group_id: data.group_id,
         sex: 0,
         avatar_path: '',

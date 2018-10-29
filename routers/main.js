@@ -1,8 +1,9 @@
 const Router = require('koa-router');
 const access = require('../middleware/access');
 
-const cashGift = require('../controllers/cash_gift');
 const contacts = require('../controllers/contacts');
+const cashGift = require('../controllers/cash_gift');
+const account = require('../controllers/account');
 
 const router = new Router({
   prefix: '/api'
@@ -30,5 +31,9 @@ router.post('/cash_gift/logs/create', access.login, cashGift.manage, cashGift.ca
 router.post('/cash_gift/logs/update', access.login, cashGift.cashGiftLogsUpdate);
 router.get('/cash_gift/logs/detail', access.login, cashGift.cashGiftLogsDetail);
 router.post('/cash_gift/logs/delete', access.login, cashGift.cashGiftLogsDelete);
+
+//债款
+router.get('/account/list', access.login, account.accountList)
+router.post('/account/logs/create', access.login, account.manage, account.accountLogsCreate)
 
 module.exports = router;

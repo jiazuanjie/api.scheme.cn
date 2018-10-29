@@ -28,6 +28,8 @@ exports.factory = function () {
       return Promise.reject('称呼字符只能2~10')
     }
 
+    this._save.first_letter = lib.getFirstLetter(this._save.name).toUpperCase()
+
     return Promise.resolve(true);
   }
 

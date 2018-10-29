@@ -81,7 +81,7 @@ exports.groupDelete = async (ctx) => {
     ctx.warning = '分组不存在或已被删除';
     return ;
   }
-  await model.where({id: Orm.in(gids)}).deleteALL();
+  await model.where({id: Orm.in(gids)}).deleteAll();
   if (model.getError()) {
     ctx.warning = model.getError();
     return ;
@@ -98,8 +98,10 @@ exports.contacts = async (ctx) => {
   let model = Contacts.factory();
   model.where({bind_user_id: ctx.uid});
   model.addWhere(ctx.query);
-  let result = await model.findAll();
-  ctx.data.result = result;
+  model.order({first_letter: 1})
+  model.setConn(ctx.mongo('scheme'))
+  ctx.data.counts = await model.counts();
+  ctx.data.items = await model.findAll();
 }
 
 /**
