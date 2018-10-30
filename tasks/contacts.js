@@ -21,10 +21,11 @@ tasks.bindContact = async function (data, mongo) {
   }
   let username = data.username ? data.username : data.name
   let contactModel = Contacts.factory()
-    contactModel.where({$or: [{$name: {$regex: username}}, {nickname: {$regex: data.username}}]})
+    contactModel.where({$or: [{name: {$regex: username}}, {nickname: {$regex: username}}]})
   if (!!data.group_id) {
       contactModel.addWhere({group_id: data.group_id})
   }
+  contactModel.setConn(mongo);
   contact = await contactModel.find();
   if (!contact._id) {
     contact = await Contacts.factory().setConn(mongo).setAttributes({

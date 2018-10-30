@@ -30,10 +30,18 @@ router.get('/cash_gift/detail', access.login, cashGift.manage, cashGift.cashGift
 router.post('/cash_gift/logs/create', access.login, cashGift.manage, cashGift.cashGiftLogsCreate);
 router.post('/cash_gift/logs/update', access.login, cashGift.cashGiftLogsUpdate);
 router.get('/cash_gift/logs/detail', access.login, cashGift.cashGiftLogsDetail);
-router.post('/cash_gift/logs/delete', access.login, cashGift.cashGiftLogsDelete);
+router.post('/cash_gift/logs/delete', access.login, cashGift.manage, cashGift.cashGiftLogsDelete);
 
 //债款
 router.get('/account/list', access.login, account.accountList)
+router.post('/account/create', access.login, account.accountCreate)
+router.post('/account/update', access.login, account.manage, account.accountUpdate)
+router.post('/account/delete', access.login, account.accountDelete)
+router.get('/account/detail', access.login, account.manage, account.accountDetail)
+router.get('/account/logs', access.login, account.manage, account.accountLogs)
 router.post('/account/logs/create', access.login, account.manage, account.accountLogsCreate)
+router.post('/account/logs/update', access.login, account.accountLogsUpdate)
+router.post('/account/logs/delete', access.login, account.accountLogsDelete)
+router.get('/account/logs/detail', access.login, account.accountLogsDetail)
 
 module.exports = router;

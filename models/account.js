@@ -1,7 +1,6 @@
 const Orm = require('../lib/orm');
 const lib = require('../lib/library.js');
-const { fields } = require('./structure/account');
-const amountQuery = require('../query/amount')
+const { fields } = require('./structure/account')
 
 exports.factory = function() {
   let model = new Orm('account', fields);
@@ -36,9 +35,9 @@ exports.factory = function() {
       return this.reject('姓名不能为空')
     } else if (!validator.isLength(this._save.name, 2, 10)) {
       return this.reject('姓名字符只能2~10')
-    } else if (!this._save.hasOwnProperty('classify') || !validator.isIn(this._save.user_id, [0, 1])) {
+    } else if (!this._save.hasOwnProperty('classify') || !validator.isIn(this._save.classify, [0, 1])) {
       return this.reject('请选择类型')
-    } else if (!this._save.hasOwnProperty('total_amount') || validator.isEmpty(this._save.hasOwnProperty('total_amount'))) {
+    } else if (!this._save.hasOwnProperty('total_amount') || validator.isEmpty(this._save.total_amount)) {
       return this.reject('金额不能为空')
     }
 
@@ -50,23 +49,6 @@ exports.factory = function() {
 
     return this.resolve(true);
   };
-  
-  // const _afterFind = model.afterFind
-  // model.afterFind = function () {
-  //   return _afterFind.call(this).then(item => {
-  //     amountQuery.returnAmount(item, ['total_amount', 'repay_amount'])
-  //     return item
-  //   })
-  // }
-  //
-  // const _afterFindAll = model.afterFindAll
-  // model.afterFindAll = function (records) {
-  //   let items = _afterFindAll.call(this, records)
-  //   items.map(r => {
-  //     amountQuery.returnAmount(r, ['total_amount', 'repay_amount'])
-  //     return r
-  //   })
-  // }
 
   return model.init();
 };

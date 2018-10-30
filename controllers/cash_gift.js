@@ -56,7 +56,7 @@ exports.cashGiftCreate = async (ctx) => {
   }
   if (ctx.post.hasOwnProperty('type_id')) {
     let cateIds = await ctx.model('cashGiftCategory').findIds();
-    if (!cateIds || cateIds.indexOf(ctx.post.type_id) === -1) {
+    if (!cateIds || cateIds.indexOf(parseInt(ctx.post.type_id)) === -1) {
       ctx.warning = '礼单所属分类不正确';
       return ;
     }
@@ -86,7 +86,7 @@ exports.cashGiftUpdate = async (ctx) => {
   }
   if (ctx.post.hasOwnProperty('type_id')) {
     let cateIds = await ctx.model('cashGiftCategory').findIds();
-    if (!cateIds || cateIds.indexOf(ctx.post.type_id) === -1) {
+    if (!cateIds || cateIds.indexOf(parseInt(ctx.post.type_id)) === -1) {
       ctx.warning = '礼单所属分类不正确';
       return ;
     }
@@ -169,9 +169,10 @@ exports.cashGiftLogsCreate = async (ctx) => {
   let result = await model.create();
   if (!result) {
     ctx.warning = model.getError();
+    return ;
   }
+  await Tasker.cashgift.saveCashGiftLog(result.id, ctx.mongo('scheme'));
   ctx.data.result = {affected: 1};
-  Tasker.cashgift.afterCreateCashGiftLog(result, ctx.mongo('scheme'));
 }
 
 /**
@@ -195,10 +196,9 @@ exports.cashGiftLogsUpdate = async (ctx) => {
   let result = await model.update();
   if (!result) {
     ctx.warning = model.getError();
+    return ;
   }
-  //更新亲密度
-  let intimacy = parseInt((parseInt(ctx.post.amount) - old_amount) /20);
-  await Contacts.factory().setConn(ctx.mongo('scheme')).where({_id: Mquery.ObjectId(result.contact_id)}).update({$inc: {intimacy: intimacy}}, true);
+  await Tasker.cashgift.saveCashGiftLog(record.id, ctx.mongo('scheme'));
   ctx.data.result = {affected: 1}
 }
 
@@ -243,5 +243,6 @@ exports.cashGiftLogsDelete = async (ctx) => {
     ctx.warning = model.getError()
     return ;
   }
+  await Tasker.cashgift.updateCashGift(ctx.pid);
   ctx.data.result = {affected: 1}
 }

@@ -26,41 +26,42 @@ tasks.afterCreateCashGift = async function (data) {
  * 1、绑定通讯录亲友
  * 2、增加亲密度
  * 3、首次添加，增加用户积分
- * @param data
+ * @param log_id
  * @param mongo
  * @returns {Promise<void>}
  */
-tasks.afterCreateCashGiftLog = async function (data, mongo) {
-  if (!data || data.length === 0 || !mongo) return ;
+tasks.saveCashGiftLog = async function (log_id, mongo) {
+  if (!log_id || !mongo) return ;
+  let model = Query.factory('cash_gift_logs');
+  let record = await model.findByPk(log_id);
   //绑定通讯录亲友
-  let contact_id = data.contacts_id;
-  if (!contact_id) {
-    let contact = await Contacts.factory().setConn(mongo).where({$or: [{name: {$regex:data.username}}, {nickname: {$regex:data.username}}]}).addWhere({group_id: data.group_id}).find();
-    if (!contact._id) {
-      contact = await Contacts.factory().setConn(mongo).setAttributes({
-        name: data.username,
-        nickname: data.username,
-        first_letter: lib.getFirstLetter(data.username).toUpperCase(),
-        group_id: data.group_id,
-        sex: 0,
-        avatar_path: '',
-        user_id: 0,
-        bind_user_id: data.user_id,
-        mobile: '',
-        intimacy: 0
-      }).create();
-    }
-    contact_id = contact._id;
-    await Query.factory('cash_gift_logs').where({id: Query.eq(data.id)}).setAttribute("contact_id", contact_id).update();
+  let contact_id = await Tasker.contacts.bindContact(record, mongo);
+  if (contact_id && record.contact_id !== contact_id) {
+    await Query.factory('cash_gift_logs').where({id: Query.eq(log_id)}).setAttribute("contact_id", contact_id).update();
+    await Contacts.factory().setConn(mongo).where({_id: Mquery.ObjectId(contact_id)}).update({$inc: {intimacy: 1}}, true)
   }
-  //增加亲友亲密度 20元 1亲密度
-  let intimacy = parseInt(parseInt(data.amount) / 100 / 20);
-  await Contacts.factory().setConn(mongo).where({_id: Mquery.ObjectId(contact_id)}).update({$inc: {intimacy: intimacy}}, true);
+  await Tasker.cashgift.updateCashGift(record.project_id);
   //首次添加，增加用户积分
-  let log = await Query.factory('cash_gift_logs').where({user_id: Query.eq(data.user_id)}).format(false).find();
+  let log = await Query.factory('cash_gift_logs').where({user_id: Query.eq(record.user_id)}).format(false).find();
   if (!log.id) {
-    Tasker.user.addUserIntegral(data.user_id, 'cash_gift', 'create_cash_gift_log', 'cash_gift_logs', data.id);
+    Tasker.user.addUserIntegral(record.user_id, 'cash_gift', 'create_cash_gift_log', 'cash_gift_logs', record.id);
   }
 }
+
+/**
+ * 更新礼单金额和人次
+ * @param cash_id
+ * @returns {Promise<void>}
+ */
+tasks.updateCashGift = async function (cash_id) {
+  let model = Query.factory('cash_gift_logs');
+  model.where({project_id: Query.eq(cash_id)});
+  let total_num = await model.count();
+  let total_amount = await model.sum('amount');
+  total_amount = total_amount / 100;
+  await Query.factory('cash_gift').where({id: Query.eq(cash_id)}).setAttributes({total_num, total_amount}).update();
+}
+
+
 
 module.exports = tasks;
