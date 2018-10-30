@@ -32,6 +32,11 @@ exports.fields = Object.assign(
     "type": "number",
     "description": ""
   },
+  "remark": {
+    "type": "string",
+    "description": "备注",
+    "max": 255
+  },
   "created_at": {
     "type": "datetime",
     "description": ""

@@ -144,7 +144,7 @@ exports.cashGiftDelete = async (ctx) => {
 exports.cashGiftDetail = async (ctx) => {
   let model = ctx.model('cashGift');
   let result = await model.findByPk(ctx.pid);
-  result.logs = await ctx.model('cashGiftLogs').where({project_id: Orm.eq(ctx.pid)}).limit(1000).format(false).findAll();
+  result.logs = await ctx.model('cashGiftLogs').where({project_id: Orm.eq(ctx.pid)}).limit(1000).findAll();
   for (let r of result.logs) {
     r.contacts = await Contacts.factory().setConn(ctx.mongo('scheme')).findByPk(Mquery.ObjectId(r.contact_id));
     r.group_id = !!r.contacts.group_id ? r.contacts.group_id : 0;
@@ -197,7 +197,6 @@ exports.cashGiftLogsUpdate = async (ctx) => {
     ctx.warning = '记录不存在或已被删除';
     return ;
   }
-  let old_amount = record.amount;
   model.setAttributes(Object.assign({}, record, ctx.post));
   let result = await model.update();
   if (!result) {
@@ -214,7 +213,7 @@ exports.cashGiftLogsUpdate = async (ctx) => {
  * @returns {Promise<void>}
  */
 exports.cashGiftLogsDetail = async (ctx) => {
-  let record = await ctx.model('cashGiftLogs').format(false).findByPk(ctx.query.record_id);
+  let record = await ctx.model('cashGiftLogs').findByPk(ctx.query.record_id);
   if (!record.id) {
     ctx.warning = '记录不存在或已被删除'
     return ;

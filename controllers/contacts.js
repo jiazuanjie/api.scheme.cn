@@ -178,7 +178,7 @@ exports.contactDelete = async (ctx) => {
   let model = Contacts.factory();
   let affected = 0;
   for (let _id of ids) {
-    await model.where({_id: Mquery.ObjectId(_id)}).delete();
+    await model.setConn(ctx.mongo('scheme')).where({_id: Mquery.ObjectId(_id)}).delete();
     affected++;
   }
   if (affected === 0) {
@@ -195,7 +195,7 @@ exports.contactDelete = async (ctx) => {
  */
 exports.contactInfo = async (ctx) => {
   let model = Contacts.factory();
-  let record = await model.findByPk(Mquery.ObjectId(ctx.query.id));
+  let record = await model.setConn(ctx.mongo('scheme')).findByPk(Mquery.ObjectId(ctx.query.id));
   if (!record._id) {
     ctx.warning = '联系人不存在或已被删除';
     return ;
