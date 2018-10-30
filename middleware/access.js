@@ -30,7 +30,7 @@ exports.auth = function () {
       }
 
       //获取用户最新信息
-      let user = await ctx.model('user').cache('id' + req.uid).findByPk(req.uid);console.log(user);
+      let user = await ctx.model('user').cache('id' + req.uid).findByPk(req.uid);
       if (Object.keys(user).length && (!user.id || !user.username)) {
         //global.redis.del('user:id' + req.uid);
         ctx.warning = {errno: 1001, message: '数据请求失败，请重试'};

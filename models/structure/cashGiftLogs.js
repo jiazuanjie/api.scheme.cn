@@ -24,6 +24,10 @@ exports.fields = Object.assign(
     "description": "联系人姓名",
     "max": 32
   },
+  "group_id": {
+    "type": "number",
+    "description": "分组"
+  },
   "amount": {
     "type": "number",
     "description": ""
