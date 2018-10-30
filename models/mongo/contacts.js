@@ -20,12 +20,16 @@ exports.factory = function () {
   ]
 
   model.validator = function () {
-    if (!this._save.hasOwnProperty('name') || validator.isEmpty(this._save.name)) {
+    if (this._save.hasOwnProperty('name') && validator.isEmpty(this._save.name)) {
       return Promise.reject('姓名不能为空')
-    } else if (!validator.isLength(this._save.name, 2, 10)) {
+    } else if (this._save.hasOwnProperty('name') && !validator.isLength(this._save.name, 2, 10)) {
       return Promise.reject('姓名字符只能2~10')
     } else if (this._save.hasOwnProperty('nickname') && !validator.isLength(this._save.nickname, 2, 10)) {
       return Promise.reject('称呼字符只能2~10')
+    }
+
+    if (this._save.hasOwnProperty('name')) {
+      this._save.first_letter = lib.getFirstLetter(this._save.name).toUpperCase()
     }
 
     return Promise.resolve(true);
