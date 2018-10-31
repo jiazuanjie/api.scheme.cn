@@ -4,10 +4,13 @@ const access = require('../middleware/access');
 const contacts = require('../controllers/contacts');
 const cashGift = require('../controllers/cash_gift');
 const account = require('../controllers/account');
+const login = require('../controllers/login');
 
 const router = new Router({
   prefix: '/api'
 });
+
+router.post('/wxlogin', login.wxlogin);
 
 //亲友录
 router.get('/contacts/group/list', access.login, contacts.groupList);

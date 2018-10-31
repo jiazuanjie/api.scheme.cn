@@ -52,5 +52,9 @@
       "attachments": "http://p8ebowc1g.bkt.clouddn.com",
       "vidio":"http://p8g09bnq2.bkt.clouddn.com"
     }
+  },
+  "weixin": {
+    "appid": "wx0f715f4a41fc38fe",
+    "secret": "6fad8da1c7258721dd1468cdf8077565"
   }
 }
