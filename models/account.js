@@ -35,16 +35,6 @@ exports.factory = function() {
       return this.reject('姓名不能为空')
     } else if (!validator.isLength(this._save.name, 2, 10)) {
       return this.reject('姓名字符只能2~10')
-    } else if (!this._save.hasOwnProperty('classify') || !validator.isIn(this._save.classify, [0, 1])) {
-      return this.reject('请选择类型')
-    } else if (!this._save.hasOwnProperty('total_amount') || validator.isEmpty(this._save.total_amount)) {
-      return this.reject('金额不能为空')
-    }
-
-    if (this._save.total_amount === this._save.repay_amount) {
-      this._save.status = 1;
-    } else {
-      this._save.status = 0;
     }
 
     return this.resolve(true);

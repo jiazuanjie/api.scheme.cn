@@ -14,11 +14,16 @@ tasks.afterSaveAccount = async function (account_id, mongo) {
 
 tasks.updateRepayAmount = async function (account_id) {
   if (!account_id) return false;
+  //给钱
+  let give_amount = await Query.factory('account_logs').where({account_id: Query.eq(account_id), is_repay: Query.eq(2)}).select('amount').sum();
+  //拿钱
+  let take_amount = await Query.factory('account_logs').where({account_id: Query.eq(account_id), is_repay: Query.eq(1)}).select('amount').sum();
+  let total_amount = give_amount - take_amount;
+  let is_borrow = total_amount > 0 ? 0 : 1;
+  total_amount = total_amount < 0 ? Math.abs(total_amount) / 100 : total_amount / 100
   let model = Query.factory('account');
-  let repay_amount = await Query.factory('account_logs').where({account_id: Query.eq(account_id)}).select('amount').sum();
-  repay_amount = repay_amount / 100;
-  let record = await model.findByPk(account_id);
-  model.setAttribute('repay_amount', repay_amount);
-  model.setAttribute('status', record.total_amount === repay_amount ? 1 : 0)
+  await model.findByPk(account_id);
+  model.setAttribute('total_amount', total_amount);
+  model.setAttribute('is_borrow', is_borrow)
   await model.update();
 }

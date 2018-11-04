@@ -46,7 +46,7 @@ exports.groupUpdate = async (ctx) => {
     return ;
   }
   let model = ctx.model('userContactsGroup');
-  let record = await model.findByPk(ctx.post.guoup_id);
+  let record = await model.findByPk(ctx.post.group_id);
   if (!record.id) {
     ctx.warning = '分组不存在或已被删除';
     return ;
@@ -101,7 +101,7 @@ exports.contacts = async (ctx) => {
   model.order({first_letter: 1})
   model.setConn(ctx.mongo('scheme'))
   ctx.data.counts = await model.counts();
-  ctx.data.items = await model.findAll();
+  ctx.data.items = await model.limit(500).findAll();
 }
 
 /**

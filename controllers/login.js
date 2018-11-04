@@ -8,7 +8,7 @@ const Query = require('../lib/query')
 function getWxOpenId(code) {
   return new Promise((resolve, reject) => {
     return request.get(`https://api.weixin.qq.com/sns/jscode2session?appid=${mconfig.weixin.appid}&secret=${mconfig.weixin.secret}&js_code=${code}&grant_type=authorization_code`, {}, function (err, res, body) {
-      return resolve(JSON.parse(body))
+      resolve(JSON.parse(body))
     });
   })
 }
@@ -21,12 +21,23 @@ function getWxOpenId(code) {
 exports.wxlogin = async (ctx) => {
   const {code} = ctx.post;
   let wxInfo = await getWxOpenId(code);
-  let model = await ctx.model('userWeixin').where({openid: Orm.eq(wxInfo.openid)}).find();
-  if (!model.id) {
+  let userWeixin = await ctx.model('userWeixin').where({openid: Orm.eq(wxInfo.openid)}).find();console.log(userWeixin)
+  let user_id = userWeixin && userWeixin.user_id;
+  if (!userWeixin.id) {
     ctx.post.sessionKey = wxInfo.session_key
-    await wxRegister(ctx.post, ctx.orm());
-
+    user_id = await wxRegister(ctx.post);
+    if (!user_id) {
+      ctx.warning = '登录失败，请稍后再试'
+      return ;
+    }
   }
+  let user = await ctx.model('user').findByPk(user_id);
+  await ctx.model('user').where({id: Orm.eq(user_id)}).updateAll({
+    last_login_ip: ctx.user_ip,
+    last_login_at: lib.datetime(),
+    last_visit_at: lib.datetime()
+  });
+  ctx.data.result = lib.loginUser(user);
 }
 
 /**
@@ -34,36 +45,36 @@ exports.wxlogin = async (ctx) => {
  * @param data
  * @returns {Promise<void>}
  */
-async function wxRegister(data, _orm) {
-  let Weixin = new WXBizDataCrypt(mconfig.weixin.appid, data.sessionKey)
-  let result = Weixin.decryptData(data.encryptedData, data.iv);
-
+async function wxRegister(data) {
   try {
-    await _orm.query('BEGIN');
+    let Weixin = new WXBizDataCrypt(mconfig.weixin.appid, data.sessionKey)
+    let result = Weixin.decryptData(data.encryptedData, data.iv);
+    await Query.factory().query('BEGIN');
     let model = Query.factory('user');
     model.setAttributes({
-      username: result.nickname,
-      nickame: result.nickname,
+      username: result.nickName,
+      nickname: result.nickName,
       sex: result.gender,
-      avatar_url: result.avatarUrl
+      avatar_path: result.avatarUrl
     })
-    let user = await model.create();
-    if (!user || model.getError()) throw new Error(model.getError());
+    let user_id = await model.create();
+    if (!user_id || model.getError()) throw new Error(model.getError());
     await Query.factory('user_weixin').setAttributes({
-      openid: result.open_id,
+      openid: result.openId,
       session_key: data.sessionKey,
-      nickname: result.nickname,
+      nickname: result.nickName,
       gender: result.gender,
       language: result.language,
       country: result.country,
       province: result.province,
       city: result.city,
       avatar_url: result.avatarUrl,
-      user_id: user.id
+      user_id: user_id
     }).create();
-    await _orm.query('COMMIT');
+    await Query.factory().query('COMMIT');
+    return user_id;
   } catch (err) {
-    await _orm.query('ROLLBACK');
-    
+    await Query.factory().query('ROLLBACK');
+    return false;
   }
 }

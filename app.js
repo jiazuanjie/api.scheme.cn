@@ -15,7 +15,7 @@ require('./tasks/tasker');
 require('./lib/worker');
 
 app.env = config.env;
-app.LOG_LEVEL = process.env.LOG_LEVEL || 'info';
+app.LOG_LEVEL = process.env.LOG_LEVEL || 'all';
 
 LoggerWatcher('./log_level', [app]);
 
@@ -34,7 +34,6 @@ app.use(Logger({
 app.use(init());
 
 app.use(access.auth());
-
 const router = require('./routers/main');
 app.use(router.routes()).use(router.allowedMethods());
 

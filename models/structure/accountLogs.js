@@ -14,10 +14,18 @@ exports.fields = Object.assign(
     "type": "number",
     "description": "金额"
   },
+  "is_repay" : {
+    "type": "number",
+    "description": "1 拿钱 2 给钱"
+  },
   "remark": {
     "type": "string",
     "description": "备注",
     "max": 255
+  },
+  "repay_date": {
+    "type": "string",
+    "description": "记录日期",
   },
   "created_at": {
     "type": "datetime",

@@ -50,13 +50,17 @@ exports.fields = Object.assign(
     "description": "",
     "max": 20
   },
-  "id": {
-    "type": "id",
-    "description": ""
-  },
   "session_key": {
     "type": "string",
     "description": "",
     "max": 100
+  },
+  "id": {
+    "type": "id",
+    "description": ""
+  },
+  "is_deleted": {
+    "type": "number",
+    "description": ""
   }
 }, defaultFields);

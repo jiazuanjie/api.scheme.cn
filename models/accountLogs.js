@@ -5,6 +5,8 @@ const { fields } = require('./structure/accountLogs');
 exports.factory = function() {
   let model = new Orm('account_logs', fields);
 
+  model.addSelect('t.is_repay repay_status');
+
   model.beforeCreate = function() {
     this._save = lib.parseFilter(this._save);
     let data = this._save;

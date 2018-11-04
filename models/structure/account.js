@@ -20,29 +20,13 @@ exports.fields = Object.assign(
     "type": "number",
     "description": "用户id"
   },
-  "total_amount": {
-    "type": "number",
-    "description": "总金额"
-  },
-  "repay_amount": {
-    "type": "number",
-    "description": "已还金额"
-  },
-  "status": {
-    "type": "number",
-    "description": "1 已完成"
-  },
-  "classify": {
+  "is_borrow": {
     "type": "number",
     "description": "0 借出 1 借入"
   },
-  "plan_repay_at": {
-    "type": "datetime",
-    "description": "计划还款日"
-  },
-  "repay_at": {
-    "type": "datetime",
-    "description": "实际还款日"
+  "total_amount": {
+    "type": "number",
+    "description": "总金额"
   },
   "remark": {
     "type": "string",

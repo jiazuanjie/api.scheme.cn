@@ -1,6 +1,8 @@
 {
   "keys": {
-    "tokenKey": "0609@justin"
+    "tokenKey": "0609@justin",
+    "newTokenkey": "justin@0609",
+    "passKey": "justin@0609"
   },
   "mdb": {
     "debug": false,

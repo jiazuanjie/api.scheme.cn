@@ -11,7 +11,7 @@ const Orm = require('../lib/orm')
  */
 exports.manage = async (ctx, next) => {
   ctx.pid = ctx.post.pid || ctx.query.pid;
-  ctx.project = {};console.log(ctx.pid);
+  ctx.project = {};
   if (!validator.isPosInt(ctx.pid)) {
     ctx.warning = '没有指定债款记录!'; return;
   }
@@ -114,7 +114,7 @@ exports.accountDelete = async (ctx) => {
  */
 exports.accountDetail = async (ctx) => {
   ctx.project.contact = await Contacts.factory().setConn(ctx.mongo('scheme')).findByPk(Mquery.ObjectId(ctx.project.contact_id))
-  ctx.project.logs = await ctx.model('accountLogs').where({account_id: Orm.eq(ctx.pid)}).order("t.created_at desc").findAll()
+  ctx.project.logs = await ctx.model('accountLogs').where({account_id: Orm.eq(ctx.pid)}).order("t.repay_date desc").limit(500).findAll()
   ctx.data.result = ctx.project
 }
 
@@ -126,8 +126,9 @@ exports.accountDetail = async (ctx) => {
 exports.accountLogs = async (ctx) => {
   let model = ctx.model('accountLogs');
   model.where({account_id: Orm.eq(ctx.pid)});
+  model.order('t.repay_date DESC')
   ctx.data.counts = await model.counts()
-  ctx.data.items = await model.findAll()
+  ctx.data.items = await model.limit(500).findAll()
   ctx.data.account = ctx.project
 }
 
