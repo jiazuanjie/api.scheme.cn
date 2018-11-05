@@ -2,6 +2,7 @@
 const Orm = require('../lib/orm');
 const Contacts = require('../models/mongo/contacts');
 const Mquery = require('../lib/mquery');
+const Query = require('../lib/query');
 
 /**
  * 分组列表
@@ -11,7 +12,7 @@ const Mquery = require('../lib/mquery');
 exports.groupList = async (ctx) => {
   let model = ctx.model('userContactsGroup');
   model.where({user_id: Orm.eq(ctx.uid)});
-  ctx.data.result = await model.limit(50).findAll();
+  ctx.data.result = await model.order('t.orderby asc').limit(50).findAll();
 }
 
 /**
@@ -58,6 +59,24 @@ exports.groupUpdate = async (ctx) => {
     return ;
   }
   ctx.data.result = {affected: 1};
+}
+
+/**
+ * 设置排序
+ * @param ctx
+ * @returns {Promise<*>}
+ */
+exports.groupSetting = async (ctx) => {
+  let { group_ids } = ctx.post
+  if (validator.isJSON(group_ids)) {
+    group_ids = JSON.parse(group_ids)
+  }
+  let orderby = 1;
+  for (let id of group_ids) {
+    await Query.factory('user_contacts_group').where({id: Orm.eq(id)}).update({orderby});
+    orderby++;
+  }
+  ctx.data.result = {affected: 1}
 }
 
 /**

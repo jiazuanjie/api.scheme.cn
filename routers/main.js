@@ -16,6 +16,7 @@ router.post('/wxlogin', login.wxlogin);
 router.get('/contacts/group/list', access.login, contacts.groupList);
 router.post('/contacts/group/create', access.login, contacts.groupCreate);
 router.post('/contacts/group/update', access.login, contacts.groupUpdate);
+router.post('/contacts/group/setting', access.login, contacts.groupSetting)
 router.post('/contacts/group/delete', access.login, contacts.groupDelete);
 router.get('/contacts', access.login, contacts.contacts);
 router.post('/contacts/create', access.login, contacts.contactCreate);
