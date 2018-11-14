@@ -7,7 +7,7 @@ const config = require('./config/main');
 const init = require('./middleware/init');
 const access = require('./middleware/access');
 const LoggerWatcher = require('./common/lib/log-watcher');
-const Logger = require('koa-logger');
+const Logger = require('./common/middleware/request-logger');
 const path = require('path');
 
 Error.stackTraceLimit = 3;
