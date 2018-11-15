@@ -42,8 +42,6 @@ exports.factory = function() {
       return this.reject('亲友姓名不能为空')
     } else if (!this._save.hasOwnProperty('amount') || validator.isEmpty(this._save.amount)) {
       return this.reject('金额不能为空')
-    } else if (!this._save.hasOwnProperty('group_id') || !validator.isPosInt(this._save.group_id)) {
-      return this.reject('分组不能为空')
     }
 
     return this.resolve(true);

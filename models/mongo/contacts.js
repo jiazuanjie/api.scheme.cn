@@ -30,6 +30,9 @@ exports.factory = function () {
 
     if (this._save.hasOwnProperty('name')) {
       this._save.first_letter = lib.getFirstLetter(this._save.name).toUpperCase()
+      if (!/^[A-Z]$/.test(this._save.first_letter) && this._save.first_letter != '#') {
+        this._save.first_letter = '#';
+      }
     }
 
     return Promise.resolve(true);
