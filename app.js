@@ -15,7 +15,7 @@ require('./tasks/tasker');
 require('./lib/worker');
 
 app.env = config.env;
-app.LOG_LEVEL = process.env.LOG_LEVEL || 'all';
+app.LOG_LEVEL = process.env.LOG_LEVEL || 'info';
 
 LoggerWatcher('./log_level', [app]);
 

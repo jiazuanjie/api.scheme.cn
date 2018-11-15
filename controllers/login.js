@@ -54,6 +54,7 @@ async function wxRegister(data) {
     model.setAttributes({
       username: result.nickName,
       nickname: result.nickName,
+      password: 'Wx123456',
       sex: result.gender,
       avatar_path: result.avatarUrl
     })
