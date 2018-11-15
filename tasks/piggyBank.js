@@ -1,7 +1,7 @@
 'use strict'
 const Query = require('../lib/query')
 
-const tasks = modules.exports = {}
+const tasks = module.exports = {}
 
 /**
  * 更新完成金额
