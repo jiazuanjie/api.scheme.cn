@@ -9,3 +9,5 @@
 *.log
 /temp
 /*.bat
+/logs
+/config/production/
