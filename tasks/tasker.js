@@ -6,5 +6,6 @@ Tasker.contacts = require("./contacts");
 Tasker.cashgift = require('./cashgift');
 Tasker.user = require('./user');
 Tasker.account = require('./account')
+Tasker.piggyBank = require('./piggyBank')
 
 module.exports = global.Tasker = Tasker;

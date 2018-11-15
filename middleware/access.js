@@ -55,7 +55,7 @@ exports.auth = function () {
         }
       } else if (req.token) {
         let localToken = lib.md5(req.uid.toString() + req.timestamp.toString() + config.keys.tokenkey);
-        if (req.token !== localToken) {
+        if (req.token !== localToken) {console.log(localToken)
           return ctx.warning = {errno: 1001, message: '用户身份验证失败，请重新登录'};
         }
       }

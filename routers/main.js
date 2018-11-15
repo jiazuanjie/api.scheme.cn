@@ -4,6 +4,8 @@ const access = require('../middleware/access');
 const contacts = require('../controllers/contacts');
 const cashGift = require('../controllers/cash_gift');
 const account = require('../controllers/account');
+const piggyBank = require('../controllers/piggy_bank');
+const userBank = require('../controllers/user_bank')
 const login = require('../controllers/login');
 
 const router = new Router({
@@ -47,5 +49,22 @@ router.post('/account/logs/create', access.login, account.manage, account.accoun
 router.post('/account/logs/update', access.login, account.accountLogsUpdate)
 router.post('/account/logs/delete', access.login, account.accountLogsDelete)
 router.get('/account/logs/detail', access.login, account.accountLogsDetail)
+
+//存钱罐
+router.get('/piggy_bank/list', access.login, piggyBank.list)
+router.post('/piggy_bank/create', access.login, piggyBank.create)
+router.post('/piggy_bank/update', access.login, piggyBank.manage, piggyBank.update)
+router.post('/piggy_bank/setting', access.login, piggyBank.manage, piggyBank.setting)
+router.post('/piggy_bank/delete', access.login, piggyBank.delete)
+router.get('/piggy_bank/detail', access.login, piggyBank.manage, piggyBank.detail)
+router.post('/piggy_bank/logs/create', access.login, piggyBank.manage, piggyBank.createLog)
+router.post('/piggy_bank/logs/update', access.login, piggyBank.manage, piggyBank.updateLog)
+router.post('/piggy_bank/logs/delete', access.login, piggyBank.manage, piggyBank.deleteLog)
+
+//信用卡
+router.get('/user/bank/list', access.login, userBank.list)
+router.post('/user/bank/create', access.login, userBank.create)
+router.post('/user/bank/update', access.login, userBank.manage, userBank.update)
+router.post('/user/bank/delete', access.login, userBank.delete)
 
 module.exports = router;
