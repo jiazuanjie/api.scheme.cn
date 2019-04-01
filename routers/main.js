@@ -7,6 +7,7 @@ const account = require('../controllers/account');
 const piggyBank = require('../controllers/piggy_bank');
 const userBank = require('../controllers/user_bank')
 const login = require('../controllers/login');
+const other = require('../controllers/other');
 
 const router = new Router({
   prefix: '/api'
@@ -67,4 +68,5 @@ router.post('/user/bank/create', access.login, userBank.create)
 router.post('/user/bank/update', access.login, userBank.manage, userBank.update)
 router.post('/user/bank/delete', access.login, userBank.delete)
 
+router.get('/stock', other.stock);
 module.exports = router;

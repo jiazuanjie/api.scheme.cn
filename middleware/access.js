@@ -34,11 +34,11 @@ exports.auth = function () {
     }
     ctx.user_ip = ctx['headers']['userip'] || ctx['headers']['x-real-ip'] || ctx.ip;
     //令牌判断
-    if (!req.appkey) {
-      return ctx.warning = 'appkey不能为空';
-    } else if (config.appkeys.indexOf(req.appkey) < 0) {
-      return ctx.warning = {errno: 403, message: '未被授权的appkey'};
-    }
+    // if (!req.appkey) {
+    //   return ctx.warning = 'appkey不能为空';
+    // } else if (config.appkeys.indexOf(req.appkey) < 0) {
+    //   return ctx.warning = {errno: 403, message: '未被授权的appkey'};
+    // }
     if (validator.isPosInt(req.uid)) {
       if (!(req.timestamp && req.token) && !(req.access_token && req.expire_timestamp)) {
         return ctx.warning = {errno: 401, message: '授权信息有误'};

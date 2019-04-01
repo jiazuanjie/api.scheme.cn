@@ -29,7 +29,7 @@
     "scheme": {
       "name": "scheme",
       "poolSize": 5,
-      "address": "mongodb://localhost:27017/scheme_test"
+      "address": "mongodb://linjie:linjie0926@alinjie.cn:27017/scheme"
     },
     "community": {
       "name": "community",
