@@ -93,3 +93,15 @@ exports.changeClass = async (ctx) => {
   })
   ctx.data.result = {affected: 1}
 }
+
+exports.deleteClasses = async (ctx) => {
+  const {class_id} = ctx.post;
+  if (!validator.isPosInt(class_id)) {
+    return ctx.warning = 'class_id不能为空'
+  }
+  let model = ctx.model('teacherClassChange').findByPk(class_id);
+  if (!model.id) {
+    return ctx.warning = '课程不存在或已被删除';
+  }
+  ctx.data.result = await {affected: model.deleteAll()}
+}

@@ -72,6 +72,7 @@ router.post('/user/bank/delete', access.login, userBank.delete)
 router.get('/teacher/classes', access.login, teacher.manage, teacher.classes);
 router.post('/teacher/classes/set', access.login, teacher.manage, teacher.setClass);
 router.post('/teacher/classes/change', access.login, teacher.manage, teacher.changeClass);
+router.post('/teacher/classes/delete', access.login, teacher.manage, teacher.deleteClasses);
 
 router.get('/stock', other.stock);
 module.exports = router;
