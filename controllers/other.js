@@ -3,7 +3,6 @@ const request = require('request');
 const cheerio = require('cheerio');
 const Promise = require('bluebird')
 
-
 exports.stock = async (ctx) => {
   let query = [];
   if (ctx.query.wd.indexOf('||') > -1) {
@@ -28,7 +27,7 @@ function getStock(data) {
         word: data
       }
     }, (err, res, body) => {
-      if (err) return ctx.warning = err;
+      if (err) return reject(false)
       const $ = cheerio.load(body);
       let stock = $('.op-stockdynamic-moretab-cur-num').text();
       let msg = $('.op-stockdynamic-moretab-cur-info').text();
