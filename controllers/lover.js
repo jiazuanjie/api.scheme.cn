@@ -29,7 +29,7 @@ exports.manage = async (ctx, next) => {
 };
 
 exports.view = async (ctx) => {
-  ctx.partner = await ctx.model('user').findByPk(ctx.partner.id)
+  ctx.partner = await ctx.model('user').findByPk(ctx.partnerId)
   ctx.data.result = {user: ctx.user, partner: ctx.partner, lover: ctx.lover}
 }
 
