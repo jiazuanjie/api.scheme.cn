@@ -9,6 +9,7 @@ const userBank = require('../controllers/user_bank')
 const login = require('../controllers/login');
 const other = require('../controllers/other');
 const teacher = require('../controllers/teacher');
+const lover = require('../controllers/lover');
 
 const router = new Router({
   prefix: '/api'
@@ -69,10 +70,14 @@ router.post('/user/bank/create', access.login, userBank.create)
 router.post('/user/bank/update', access.login, userBank.manage, userBank.update)
 router.post('/user/bank/delete', access.login, userBank.delete)
 
-router.get('/teacher/classes', access.login, teacher.manage, teacher.classes);
-router.post('/teacher/classes/set', access.login, teacher.manage, teacher.setClass);
-router.post('/teacher/classes/change', access.login, teacher.manage, teacher.changeClass);
-router.post('/teacher/classes/delete', access.login, teacher.manage, teacher.deleteClasses);
+router.post('/lover/bind', access.login, lover.bindLover);
+router.post('/lover/view', access.login, lover.manage, lover.view);
+router.post('/lover/unbind', access.login, lover.manage, lover.unbindLover);
+router.post('/lover/setting', access.login, lover.manage, lover.settingLover);
+router.get('/lover/things', access.login, lover.manage, lover.loverThings);
+router.post('/lover/things/create', access.login, lover.manage, lover.createLoverThing);
+router.post('/lover/things/update', access.login, lover.manage, lover.updateLoverThing);
+router.post('/lover/things/delete', access.login, lover.manage, lover.delLoverThing);
 
 router.get('/stock', other.stock);
 module.exports = router;

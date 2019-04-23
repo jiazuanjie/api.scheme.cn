@@ -28,7 +28,7 @@ exports.manage = async (ctx, next) => {
 exports.list = async (ctx) => {
   let model = ctx.model('piggyBank');
   model.where({user_id: Orm.eq(ctx.uid), is_finsh: Orm.eq(0)})
-  model.addWhere(this.query)
+  model.addWhere(ctx.query)
   ctx.data.counts = await model.counts()
   ctx.data.result = await model.limit(100).findAll()
 }
@@ -107,7 +107,7 @@ exports.delete = async (ctx) => {
   model.where({id: Orm.in(pids)})
   let records = await model.findAll();
   if (records.length === 0) {
-    return this.warning = '项目不存在或已被删除'
+    return ctx.warning = '项目不存在或已被删除'
   }
   await model.where({id: Orm.in(pids)}).deleteAll()
   if (model.getError()) {
