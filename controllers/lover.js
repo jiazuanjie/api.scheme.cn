@@ -58,6 +58,8 @@ exports.loverThings = async (ctx) => {
   } else if (ctx.query.select === 'partner') {
     model.where({user_id: Orm.eq(ctx.partnerId)})
   }
+  delete ctx.query.select;
+  model.joinUser();
   model.addWhere(ctx.query);
   ctx.data.counts = await model.counts();
   ctx.data.items = await model.findAll();
