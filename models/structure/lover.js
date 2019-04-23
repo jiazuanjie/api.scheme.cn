@@ -7,10 +7,6 @@ exports.fields = Object.assign(
     "description": "",
     "base": true
   },
-  "id": {
-    "type": "id",
-    "description": ""
-  },
   "man_id": {
     "type": "number",
     "description": ""
@@ -29,6 +25,10 @@ exports.fields = Object.assign(
   },
   "is_closed": {
     "type": "number",
+    "description": ""
+  },
+  "id": {
+    "type": "id",
     "description": ""
   },
   "is_deleted": {
