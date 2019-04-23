@@ -71,7 +71,7 @@ router.post('/user/bank/update', access.login, userBank.manage, userBank.update)
 router.post('/user/bank/delete', access.login, userBank.delete)
 
 router.post('/lover/bind', access.login, lover.bindLover);
-router.post('/lover/view', access.login, lover.manage, lover.view);
+router.get('/lover/view', access.login, lover.manage, lover.view);
 router.post('/lover/unbind', access.login, lover.manage, lover.unbindLover);
 router.post('/lover/setting', access.login, lover.manage, lover.settingLover);
 router.get('/lover/things', access.login, lover.manage, lover.loverThings);
