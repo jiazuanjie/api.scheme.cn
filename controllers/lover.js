@@ -64,16 +64,14 @@ exports.loverThings = async (ctx) => {
 }
 
 exports.createLoverThing = async (ctx) => {
-  const {lover_id, occur_date} = ctx.post;
-  if (parseInt(lover_id) === 0) {
-    ctx.warning = '请确定情侣关系';
-    return
-  } else if (!validator.isDate(occur_date)) {
+  const {occur_date} = ctx.post;
+  if (!validator.isDate(occur_date)) {
     ctx.warning = '时间格式不正确';
     return
   }
   let model = ctx.model('loverThing');
   model.setAttribute('user_id', ctx.uid);
+  model.setAttribute('lover_id', ctx.lover.id);
   model.setAttributes(ctx.post);
   let result = await model.create();
   if (!result) {
