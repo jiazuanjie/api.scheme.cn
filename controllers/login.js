@@ -73,7 +73,8 @@ async function wxRegister(data) {
       user_id: user_id
     }).create();
 
-    for (let names = ['朋友', '同学', '同事'] of name) {
+    let names = ['朋友', '同学', '同事'];
+    for (let names of name) {
       await Query.factory('user_contacts_group').create({
         user_id: user_id,
         name: name
