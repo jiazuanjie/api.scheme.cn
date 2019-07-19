@@ -73,13 +73,20 @@ async function wxRegister(data) {
       user_id: user_id
     }).create();
 
-    let names = ['朋友', '同学', '同事'];
-    for (let names of name) {
-      await Query.factory('user_contacts_group').create({
-        user_id: user_id,
-        name: name
-      });
-    }
+
+    await Query.factory('user_contacts_group').create({
+      user_id: user_id,
+      name: '朋友'
+    });
+    await Query.factory('user_contacts_group').create({
+      user_id: user_id,
+      name: '同学'
+    });
+    await Query.factory('user_contacts_group').create({
+      user_id: user_id,
+      name: '同事'
+    });
+    
     await Query.factory().query('COMMIT');
     return user_id;
   } catch (err) {
