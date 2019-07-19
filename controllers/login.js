@@ -86,7 +86,7 @@ async function wxRegister(data) {
       user_id: user_id,
       name: '同事'
     });
-    
+
     await Query.factory().query('COMMIT');
     return user_id;
   } catch (err) {
