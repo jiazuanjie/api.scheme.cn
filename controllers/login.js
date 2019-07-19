@@ -21,7 +21,7 @@ function getWxOpenId(code) {
 exports.wxlogin = async (ctx) => {
   const {code} = ctx.post;
   let wxInfo = await getWxOpenId(code);
-  let userWeixin = await ctx.model('userWeixin').where({openid: Orm.eq(wxInfo.openid)}).find();console.log(userWeixin)
+  let userWeixin = await ctx.model('userWeixin').where({openid: Orm.eq(wxInfo.openid)}).find();
   let user_id = userWeixin && userWeixin.user_id;
   if (!userWeixin.id) {
     ctx.post.sessionKey = wxInfo.session_key
@@ -46,10 +46,10 @@ exports.wxlogin = async (ctx) => {
  * @returns {Promise<void>}
  */
 async function wxRegister(data) {
+  await Query.factory().query('BEGIN');
   try {
     let Weixin = new WXBizDataCrypt(mconfig.weixin.appid, data.sessionKey)
     let result = Weixin.decryptData(data.encryptedData, data.iv);
-    await Query.factory().query('BEGIN');
     let model = Query.factory('user');
     model.setAttributes({
       username: result.nickName,
