@@ -72,6 +72,13 @@ async function wxRegister(data) {
       avatar_url: result.avatarUrl,
       user_id: user_id
     }).create();
+
+    for (let names = ['朋友', '同学', '同事'] of name) {
+      await Query.factory('user_contacts_group').create({
+        user_id: user_id,
+        name: name
+      });
+    }
     await Query.factory().query('COMMIT');
     return user_id;
   } catch (err) {
