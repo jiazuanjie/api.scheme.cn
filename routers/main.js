@@ -8,7 +8,7 @@ const piggyBank = require('../controllers/piggy_bank');
 const userBank = require('../controllers/user_bank')
 const login = require('../controllers/login');
 const other = require('../controllers/other');
-const teacher = require('../controllers/teacher');
+const support = require('../controllers/support');
 const lover = require('../controllers/lover');
 
 const router = new Router({
@@ -80,4 +80,5 @@ router.post('/lover/things/update', access.login, lover.manage, lover.updateLove
 router.post('/lover/things/delete', access.login, lover.manage, lover.delLoverThing);
 
 router.get('/stock', other.stock);
+router.get('/support', support.list);
 module.exports = router;
