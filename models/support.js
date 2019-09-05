@@ -2,7 +2,7 @@ const Orm = require('../lib/orm');
 const { fields } = require('./structure/support')
 
 exports.factory = function() {
-  let model = new Orm('account', fields);
+  let model = new Orm('support', fields);
 
   model.beforeCreate = function() {
     this._save = lib.parseFilter(this._save);

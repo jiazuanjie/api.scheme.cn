@@ -20,9 +20,9 @@
   "redis": {
     "db": 0,
     "port": 6379,
-    "host": "localhost",
-    "auth": "justin0609",
-    "password": "justin0609",
+    "host": "dev.sosho.cn",
+    "auth": "usho85121608",
+    "password": "usho85121608",
     "connect_timeout": 2592000000
   },
   "mongodb": {
