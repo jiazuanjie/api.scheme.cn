@@ -8,7 +8,7 @@ const modelTemplate = fs.readFileSync(path.join(process.cwd(), 'bin', 'model.tmp
 
 const rootDir = path.join(process.cwd(), 'models');
 
-let replace_profix = 'sc_'
+let replace_profix = ''
 
 if (process.env.NODE_ENV === 'production') {
   console.log(new Error(`不能在当前${process.env.NODE_ENV}环境下运行`));
@@ -22,8 +22,6 @@ const r = readline.createInterface({
 r.question('模板名称:\n', modelName => {
   modelName = modelName.trim()
   if (!modelName) return console.log('请输入模型名称');
-
-  modelName = 'sc_' + modelName
 
   start(modelName);
 });

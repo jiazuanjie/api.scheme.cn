@@ -50,7 +50,7 @@ exports.factory = function() {
 
   model.joinCategory = function () {
       this.addSelect('cate.name as cate_name');
-      this.join('LEFT JOIN sc_cash_gift_category cate ON cate.id = t.type_id');
+      this.join('LEFT JOIN cash_gift_category cate ON cate.id = t.type_id');
       return this;
   }
 
