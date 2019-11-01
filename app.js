@@ -12,7 +12,6 @@ const path = require('path');
 
 Error.stackTraceLimit = 3;
 require('./tasks/tasker');
-require('./lib/worker');
 
 app.env = config.env;
 app.LOG_LEVEL = process.env.LOG_LEVEL || 'info';

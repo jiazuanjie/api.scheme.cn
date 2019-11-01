@@ -17,10 +17,6 @@ mysql.createConn('mdb');
 let redis = new _redis();
 redis.createConn('redis');
 
-//创建rabbitmq链接
-let rabbitmq = new _rabbitmq();
-rabbitmq.createConn('rabbitmq');
-
 //注册mongo连接
 let mongo = new _mongo();
 mongo.createConn(mconfig['mongodb']['scheme']);

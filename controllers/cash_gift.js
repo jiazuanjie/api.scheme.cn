@@ -255,3 +255,32 @@ exports.cashGiftLogsDelete = async (ctx) => {
   await Tasker.cashgift.updateCashGift(ctx.pid);
   ctx.data.result = {affected: 1}
 }
+
+
+exports.analyze = async (ctx) => {
+  let models = await ctx.model('cashGiftLogs').where({user_id: Orm.eq(ctx.uid)}).order('group_id ASC, update_at DESC').findAll();
+  let result = {}
+  for (let row of models) {
+    let project = await ctx.model('cashGift').findByPk(row.project_id)
+    if (!project.id) {
+      continue;
+    }
+    if (!result[row.username]) {
+      result[row.username] = {
+        give_amount: 0,
+        receive_amount: 0,
+        give_num: 0,
+        receive_num: 0
+      }
+    }
+    if (project.classify == 1) {
+      result[row.username]['give_amount'] += row.amount;
+      result[row.username]['give_num']++;
+    } else {
+      result[row.username]['receive_amount'] += row.amount;
+      result[row.username]['receive_num']++;
+    }
+  }
+
+  ctx.data.result = result;
+}

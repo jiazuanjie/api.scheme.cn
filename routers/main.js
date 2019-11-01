@@ -41,6 +41,7 @@ router.post('/cash_gift/logs/create', access.login, cashGift.manage, cashGift.ca
 router.post('/cash_gift/logs/update', access.login, cashGift.cashGiftLogsUpdate);
 router.get('/cash_gift/logs/detail', access.login, cashGift.cashGiftLogsDetail);
 router.post('/cash_gift/logs/delete', access.login, cashGift.manage, cashGift.cashGiftLogsDelete);
+router.get('/cash_gift/analyze', access.login, cashGift.analyze);
 
 //债款
 router.get('/account/list', access.login, account.accountList)
@@ -54,35 +55,8 @@ router.post('/account/logs/update', access.login, account.accountLogsUpdate)
 router.post('/account/logs/delete', access.login, account.accountLogsDelete)
 router.get('/account/logs/detail', access.login, account.accountLogsDetail)
 
-//存钱罐
-router.get('/piggy_bank/list', access.login, piggyBank.list)
-router.post('/piggy_bank/create', access.login, piggyBank.create)
-router.post('/piggy_bank/update', access.login, piggyBank.manage, piggyBank.update)
-router.post('/piggy_bank/setting', access.login, piggyBank.manage, piggyBank.setting)
-router.post('/piggy_bank/delete', access.login, piggyBank.delete)
-router.get('/piggy_bank/detail', access.login, piggyBank.manage, piggyBank.detail)
-router.post('/piggy_bank/logs/create', access.login, piggyBank.manage, piggyBank.createLog)
-router.post('/piggy_bank/logs/update', access.login, piggyBank.manage, piggyBank.updateLog)
-router.post('/piggy_bank/logs/delete', access.login, piggyBank.manage, piggyBank.deleteLog)
-
-//信用卡
-router.get('/user/bank/list', access.login, userBank.list)
-router.post('/user/bank/create', access.login, userBank.create)
-router.post('/user/bank/update', access.login, userBank.manage, userBank.update)
-router.post('/user/bank/delete', access.login, userBank.delete)
-
-router.post('/lover/bind', access.login, lover.bindLover);
-router.get('/lover/view', access.login, lover.manage, lover.view);
-router.post('/lover/unbind', access.login, lover.manage, lover.unbindLover);
-router.post('/lover/setting', access.login, lover.manage, lover.settingLover);
-router.get('/lover/things', access.login, lover.manage, lover.loverThings);
-router.post('/lover/things/create', access.login, lover.manage, lover.createLoverThing);
-router.post('/lover/things/update', access.login, lover.manage, lover.updateLoverThing);
-router.post('/lover/things/delete', access.login, lover.manage, lover.delLoverThing);
 
 router.get('/feedback/list', access.login, feedback.lists);
 router.post('/feedback/create', access.login, feedback.create);
 
-router.get('/stock', other.stock);
-router.get('/support', support.list);
 module.exports = router;
