@@ -270,7 +270,8 @@ exports.analyze = async (ctx) => {
         give_amount: 0,
         receive_amount: 0,
         give_num: 0,
-        receive_num: 0
+        receive_num: 0,
+        group_id: row.group_id
       }
     }
     if (project.classify == 1) {
