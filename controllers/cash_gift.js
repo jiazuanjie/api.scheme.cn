@@ -271,7 +271,8 @@ exports.analyze = async (ctx) => {
         receive_amount: 0,
         give_num: 0,
         receive_num: 0,
-        group_id: row.group_id
+        group_id: row.group_id,
+        name: row.username,
       }
     }
     if (project.classify == 1) {
@@ -284,4 +285,14 @@ exports.analyze = async (ctx) => {
   }
 
   ctx.data.result = result;
+}
+
+exports.signal = async (ctx) => {
+  const {username} = ctx.query;
+  let models = await ctx.model('cashGiftLogs').where({user_id: Orm.eq(ctx.uid), username: Orm.eq(username)}).findAll();
+  for (let model of models) {
+    model.project = await ctx.model('cashGift').findByPk(model.project_id);
+  }
+
+  ctx.data.result = models
 }
