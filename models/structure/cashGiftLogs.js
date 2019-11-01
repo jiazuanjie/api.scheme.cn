@@ -37,6 +37,10 @@ exports.fields = Object.assign(
     "description": "备注",
     "max": 255
   },
+  "date": {
+    "type": "date",
+    "description": "日期"
+  },
   "created_at": {
     "type": "datetime",
     "description": ""

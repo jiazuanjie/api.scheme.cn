@@ -52,14 +52,14 @@ function resSerializer(res) {
   }
 }
 
-// process.on('SIGINT', (err)=>{
-//   if (err) {
-//     console.log(err, '进程停止失败，强制退出!');
-//     return process.exit(1);
-//   }
-//   console.log('接收服务停止信号，3秒后退出!');
-//   server.close(()=>{ setTimeout(()=> process.exit(), 3000) });
-//   setTimeout(()=>process.exit(), 10 * 1000);
-// });
+ process.on('SIGINT', (err)=>{
+   if (err) {
+     console.log(err, '进程停止失败，强制退出!');
+     return process.exit(1);
+   }
+   console.log('接收服务停止信号，3秒后退出!');
+   server.close(()=>{ setTimeout(()=> process.exit(), 3000) });
+   setTimeout(()=>process.exit(), 10 * 1000);
+ });
 
 module.exports = app

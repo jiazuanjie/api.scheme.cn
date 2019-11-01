@@ -45,10 +45,10 @@ exports.wxlogin = async (ctx) => {
  * @param data
  * @returns {Promise<void>}
  */
-async function wxRegister(data) {
+async function wxRegister(data) {console.log(data)
   await Query.factory().query('BEGIN');
   try {
-    let Weixin = new WXBizDataCrypt(mconfig.weixin.appid, data.sessionKey)
+    let Weixin = new WXBizDataCrypt(mconfig.weixin.appid, data.sessionKey);console.log(Weixin)
     let result = Weixin.decryptData(data.encryptedData, data.iv);
     let model = Query.factory('user');
     model.setAttributes({
@@ -89,7 +89,7 @@ async function wxRegister(data) {
 
     await Query.factory().query('COMMIT');
     return user_id;
-  } catch (err) {
+  } catch (err) {console.log(err)
     await Query.factory().query('ROLLBACK');
     return false;
   }

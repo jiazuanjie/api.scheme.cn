@@ -45,6 +45,10 @@ exports.cashGiftList = async (ctx) => {
   model.joinCategory();
   let result = await model.findAll();
   let counts = await model.counts({sums:[{name:'total_num', field: 't.total_num'}, {name: 'total_amount', field: 't.total_amount'}]});
+  let give_amount = await ctx.model('cashGift').where({user_id: Orm.eq(ctx.uid), classify: Orm.eq(1)}).select('total_amount').sum();
+  let receive_amount = await ctx.model('cashGift').where({user_id: Orm.eq(ctx.uid), classify: Orm.eq(0)}).select('total_amount').sum();
+  counts.give_amount = give_amount / 100;
+  counts.receive_amount = receive_amount / 100;  
   counts.total_amount = counts.total_amount / 100
   ctx.data.counts = counts;
   ctx.data.items = result;
@@ -147,7 +151,7 @@ exports.cashGiftDetail = async (ctx) => {
   result.logs = await ctx.model('cashGiftLogs').where({project_id: Orm.eq(ctx.pid)}).limit(1000).findAll();
   for (let r of result.logs) {
     r.contacts = await Contacts.factory().setConn(ctx.mongo('scheme')).findByPk(Mquery.ObjectId(r.contact_id));
-    r.group_id = !!r.contacts.group_id ? r.contacts.group_id : 0;
+ //   r.group_id = !!r.contacts.group_id ? r.contacts.group_id : 0;
   }
   ctx.data.result = result;
 }

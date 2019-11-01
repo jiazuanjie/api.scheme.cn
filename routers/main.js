@@ -10,6 +10,7 @@ const login = require('../controllers/login');
 const other = require('../controllers/other');
 const support = require('../controllers/support');
 const lover = require('../controllers/lover');
+const feedback = require('../controllers/feedback')
 
 const router = new Router({
   prefix: '/api'
@@ -78,6 +79,9 @@ router.get('/lover/things', access.login, lover.manage, lover.loverThings);
 router.post('/lover/things/create', access.login, lover.manage, lover.createLoverThing);
 router.post('/lover/things/update', access.login, lover.manage, lover.updateLoverThing);
 router.post('/lover/things/delete', access.login, lover.manage, lover.delLoverThing);
+
+router.get('/feedback/list', access.login, feedback.lists);
+router.post('/feedback/create', access.login, feedback.create);
 
 router.get('/stock', other.stock);
 router.get('/support', support.list);
