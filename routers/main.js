@@ -42,6 +42,7 @@ router.post('/cash_gift/logs/update', access.login, cashGift.cashGiftLogsUpdate)
 router.get('/cash_gift/logs/detail', access.login, cashGift.cashGiftLogsDetail);
 router.post('/cash_gift/logs/delete', access.login, cashGift.manage, cashGift.cashGiftLogsDelete);
 router.get('/cash_gift/analyze', access.login, cashGift.analyze);
+router.get('/cash_gift/signal', access.login, cashGift.signal);
 
 //债款
 router.get('/account/list', access.login, account.accountList)
