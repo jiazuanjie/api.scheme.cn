@@ -5,7 +5,7 @@ const Orm = require('../lib/orm');
 const mquery = require('../lib/mquery');
 const _mongo = require('../common/lib/mongo');
 const models = require('./../lib/models');
-const _rabbitmq = require('../lib/rabbitmq');
+//const _rabbitmq = require('../lib/rabbitmq');
 const debug = require('debug')('app:init');
 
 //创建数据库连接池
