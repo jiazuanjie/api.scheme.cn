@@ -150,8 +150,7 @@ exports.cashGiftDetail = async (ctx) => {
   let result = await model.findByPk(ctx.pid);
   result.logs = await ctx.model('cashGiftLogs').where({project_id: Orm.eq(ctx.pid)}).limit(1000).findAll();
   for (let r of result.logs) {
-    r.contacts = await Contacts.factory().setConn(ctx.mongo('scheme')).findByPk(Mquery.ObjectId(r.contact_id));
- //   r.group_id = !!r.contacts.group_id ? r.contacts.group_id : 0;
+
   }
   ctx.data.result = result;
 }
@@ -181,7 +180,7 @@ exports.cashGiftLogsCreate = async (ctx) => {
     ctx.warning = model.getError();
     return ;
   }
-  await Tasker.cashgift.saveCashGiftLog(result.id, ctx.mongo('scheme'));
+  await Tasker.cashgift.saveCashGiftLog(result.id);
   ctx.data.result = {affected: 1};
 }
 
@@ -207,7 +206,7 @@ exports.cashGiftLogsUpdate = async (ctx) => {
     ctx.warning = model.getError();
     return ;
   }
-  await Tasker.cashgift.saveCashGiftLog(record.id, ctx.mongo('scheme'));
+  await Tasker.cashgift.saveCashGiftLog(record.id);
   ctx.data.result = {affected: 1}
 }
 
@@ -222,7 +221,6 @@ exports.cashGiftLogsDetail = async (ctx) => {
     ctx.warning = '记录不存在或已被删除'
     return ;
   }
-  record.contact = await Contacts.factory().setConn(ctx.mongo('scheme')).findByPk(record.contact_id);
   ctx.data.result = record;
 }
 
