@@ -1,8 +1,0 @@
-{
-  "name": "schemeapi",
-  "host": "localhost",
-  "port": 3003,
-  "appkeys": [
-    "wechat"
-  ]
-}
